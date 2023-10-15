@@ -6,9 +6,14 @@
     <title>MQTT Flask App</title>
 </head>
 <body>
-    <form>
-        <label for="message">Última Mensagem do Tópico</label>
-        <p id="message">{{ message }}</p>
-    </form>
+    <h1>Última Mensagem do Tópico</h1>
+    {% if message %}
+        <p><strong>Tópico:</strong> {{ message[1] }}</p>
+        <p><strong>Mensagem:</strong> {{ message[2] }}</p>
+        <p><strong>Data e Hora:</strong> {{ message[3] }}</p>
+    {% else %}
+        <p>Nenhuma mensagem disponível.</p>
+    {% endif %}
 </body>
 </html>
+
