@@ -16,7 +16,7 @@ DB_NAME = "mqtt_data.db"
 def create_table():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    
+
     # Criar nova tabela se não existir
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS messages_new (
@@ -26,6 +26,12 @@ def create_table():
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+    
+    # Verifica se a coluna 'timestamp' existe e a adiciona se não existir
+    cursor.execute("PRAGMA table_info(messages_new)")
+    columns = [column[1] for column in cursor.fetchall()]
+    if 'timestamp' not in columns:
+        cursor.execute("ALTER TABLE messages_new ADD COLUMN timestamp DATETIME DEFAULT CURRENT_TIMESTAMP")
     
     # Copiar dados da tabela antiga para a nova
     cursor.execute('INSERT INTO messages_new (topic, payload) SELECT topic, payload FROM messages')
@@ -86,4 +92,3 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
