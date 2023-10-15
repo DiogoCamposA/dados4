@@ -3,17 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MQTT Flask App</title>
+    <title>MQTT Messages</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h1>Última Mensagem do Tópico</h1>
-    {% if message %}
-        <p><strong>Tópico:</strong> {{ message[1] }}</p>
-        <p><strong>Mensagem:</strong> {{ message[2] }}</p>
-        <p><strong>Data e Hora:</strong> {{ message[3] }}</p>
-    {% else %}
-        <p>Nenhuma mensagem disponível.</p>
-    {% endif %}
+    <h1>MQTT Messages</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Topic</th>
+            <th>Payload</th>
+            <th>Timestamp</th>
+        </tr>
+        {% for message in messages %}
+            <tr>
+                <td>{{ message[0] }}</td>
+                <td>{{ message[1] }}</td>
+                <td>{{ message[2] }}</td>
+                <td>{{ message[3] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
 
